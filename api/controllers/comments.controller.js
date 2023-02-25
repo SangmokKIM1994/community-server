@@ -22,7 +22,18 @@ module.exports = class CommentsController {
   };
 
   // 댓글 목록 조회
-  getCommentsByPost = async (req, res) => {};
+  getCommentsByPost = async (req, res) => {
+    // const { userId } = res.locals.user;
+    const { postId } = req.params;
+
+    if (!postId) {
+      throw new Error("댓글 목록 조회에 실패하였습니다.");
+    }
+    const result = await this.commentsService.getCommentsByPost({
+      postId,
+    });
+    return res.status(200).json(result);
+  };
 
   // 댓글 수정
   editComment = async (req, res) => {};

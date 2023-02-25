@@ -20,7 +20,17 @@ module.exports = class CommentsService {
   };
 
   // 댓글 목록 조회
-  getCommentsByPost = async (postId) => {};
+  getCommentsByPost = async ({ postId }) => {
+    // postId를 검증하는 예외 처리 필요
+
+    const comments = await this.commentsRepository.getCommentsByPost({
+      postId,
+    });
+    if (!comments) {
+      throw new Error("댓글 목록 조회에 실패하였습니다.");
+    }
+    return { success: true, comments };
+  };
 
   // 댓글 수정
   editComment = async (commentId) => {};
