@@ -2,7 +2,7 @@ const cookieparser = require("cookie-parser");
 const dotenv = require("dotenv");
 const express = require("express");
 const router = require("./api/routes");
-const errorMiddleware = require("./api/middlewares/errorMiddleware.js");
+const errorMiddleware = require("./api/middlewares/error.middleware.js");
 
 dotenv.config();
 
