@@ -2,11 +2,11 @@ const { Comments } = require("../../db/models");
 
 module.exports = class CommentRepository {
   // 댓글 작성
-  createComment = async ({ postId, content }) => {
+  createComment = async ({ userId, postId, comment }) => {
     const newComment = await Comments.create({
+      userId,
       postId,
-      content,
-      userId: 1,
+      comment,
     });
     return newComment;
   };

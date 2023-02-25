@@ -5,15 +5,16 @@ module.exports = class CommentsService {
     this.commentsRepository = new CommentsRepository();
   }
   // 댓글 작성
-  createComment = async ({ postId, content }) => {
+  createComment = async ({ userId, postId, comment }) => {
     const result = await this.commentsRepository.createComment({
+      userId,
       postId,
-      content,
+      comment,
     });
     if (!result) {
       throw new Error("댓글 작성에 실패하였습니다.");
     }
-    return { success: ture, message: "댓글이 생성되었습니다." };
+    return { success: true, message: "댓글이 생성되었습니다." };
   };
 
   // 댓글 목록 조회

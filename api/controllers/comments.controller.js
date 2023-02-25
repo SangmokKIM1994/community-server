@@ -6,14 +6,17 @@ module.exports = class CommentsController {
   }
   // 댓글 작성
   createComment = async (req, res) => {
+    // const { userId } = res.locals.user;
     const { postId } = req.params;
-    const { content } = req.body;
-    if (!(postId && content)) {
+    const { comment } = req.body;
+
+    if (!(postId && comment)) {
       throw new Error("댓글 작성에 실패하였습니다.");
     }
     const result = await this.commentsService.createComment({
-      postId,
-      content,
+      userId: 1, // mock data : postId, userId
+      postId: 1, // mock data : postId, userId
+      comment,
     });
     return res.status(200).json(result);
   };
