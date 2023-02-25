@@ -21,7 +21,7 @@ class PostsController {
     findOnePost = async(req,res,next) => {
         const {postId} = req.params
 
-        const postData = await this.postsService.findOnePost({where:{postId}});
+        const postData = await this.postsService.findOnePost(postId);
 
         res.status(200).json({success:true,data:postData});
     }
@@ -31,7 +31,7 @@ class PostsController {
         const {postId} = req.params;
         const {title, content} = req.body;
 
-        await this.postsService.editPost({where:{postId}},{title,content});
+        await this.postsService.editPost(postId,title,content);
 
         res.status(200).json({success:true,massege : "게시글이 수정되었습니다."})
     }
@@ -39,7 +39,7 @@ class PostsController {
     deletePost = async(req,res,next) => {
         const {postId} = req.params
 
-        await this.postsService.deletePost({where:{postId}})
+        await this.postsService.deletePost(postId)
 
         res.status(200).json({success:true,massege : "게시글이 삭제되었습니다."})
     }
