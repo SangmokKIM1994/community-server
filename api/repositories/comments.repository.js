@@ -27,8 +27,20 @@ module.exports = class CommentRepository {
     return comments;
   };
 
+  // 특정 댓글 조회
+  getCommentById = async ({ commentId }) => {
+    const comment = await Comments.findByPk(commentId);
+    return comment;
+  };
+
   // 댓글 수정
-  editComment = async (commentId) => {};
+  editComment = async ({ commentId, comment }) => {
+    const updated = await Comments.update(
+      { comment },
+      { where: { commentId } }
+    );
+    return updated;
+  };
 
   // 댓글 삭제
   deleteComment = async (commentId) => {};

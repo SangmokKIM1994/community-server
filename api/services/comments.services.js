@@ -22,7 +22,6 @@ module.exports = class CommentsService {
   // 댓글 목록 조회
   getCommentsByPost = async ({ postId }) => {
     // postId를 검증하는 예외 처리 필요
-
     const comments = await this.commentsRepository.getCommentsByPost({
       postId,
     });
@@ -33,7 +32,23 @@ module.exports = class CommentsService {
   };
 
   // 댓글 수정
-  editComment = async (commentId) => {};
+  editComment = async ({ commentId, comment }) => {
+    const existComment = await this.commentsRepository.getCommentById({
+      commentId,
+    });
+    if (!existComment) {
+      throw new Error("댓글 조회에 실패하였습니다.");
+    }
+    const updated = await this.commentsRepository.editComment({
+      commentId,
+      comment,
+    });
+    console.log(updated);
+    if (!updated) {
+      throw new Error("댓글 수정에 실패하였습니다.");
+    }
+    return { success: true, message: "댓글이 수정되었습니다." };
+  };
 
   // 댓글 삭제
   deleteComment = async (commentId) => {};
