@@ -2,11 +2,9 @@ const cookieparser = require("cookie-parser");
 const dotenv = require("dotenv");
 const express = require("express");
 const router = require("./api/routes");
-<<<<<<< Updated upstream
 const errorMiddleware = require("./api/middlewares/error.middleware.js");
-=======
-const errorMiddleware = require("./api/middlewares/errorMiddleware.js");
->>>>>>> Stashed changes
+
+
 
 dotenv.config();
 
