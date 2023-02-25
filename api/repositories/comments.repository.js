@@ -43,5 +43,8 @@ module.exports = class CommentRepository {
   };
 
   // 댓글 삭제
-  deleteComment = async (commentId) => {};
+  deleteComment = async ({ commentId }) => {
+    const deleted = await Comments.destroy({ where: { commentId } });
+    return deleted;
+  };
 };

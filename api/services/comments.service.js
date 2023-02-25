@@ -43,7 +43,6 @@ module.exports = class CommentsService {
       commentId,
       comment,
     });
-    console.log(updated);
     if (!updated) {
       throw new Error("댓글 수정에 실패하였습니다.");
     }
@@ -51,5 +50,19 @@ module.exports = class CommentsService {
   };
 
   // 댓글 삭제
-  deleteComment = async (commentId) => {};
+  deleteComment = async ({ commentId }) => {
+    const existComment = await this.commentsRepository.getCommentById({
+      commentId,
+    });
+    if (!existComment) {
+      throw new Error("댓글 조회에 실패하였습니다.");
+    }
+    const deleted = await this.commentsRepository.deleteComment({
+      commentId,
+    });
+    if (!deleted) {
+      throw new Error("댓글 삭제에 실패하였습니다.");
+    }
+    return { success: true, message: "댓글이 삭제되었습니다." };
+  };
 };

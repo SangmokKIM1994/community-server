@@ -63,5 +63,20 @@ module.exports = class CommentsController {
   };
 
   // 댓글 삭제
-  deleteComment = async (req, res) => {};
+  deleteComment = async (req, res, next) => {
+    // const { userId } = res.locals.user;
+    const { commentId } = req.params;
+
+    try {
+      if (!commentId) {
+        throw new Error("댓글 삭제에 실패하였습니다.");
+      }
+      const result = await this.commentsService.deleteComment({
+        commentId,
+      });
+      return res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  };
 };
