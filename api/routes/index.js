@@ -1,6 +1,7 @@
 const express = require("express");
+const PostsRouter = require("./posts.route")
 const router = express.Router();
 
-router.get("/", (req, res) => { res.send("정상적으로 요청되었습니다.") });
+router.use("/posts", PostsRouter);
 
 module.exports = router;
