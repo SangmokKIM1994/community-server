@@ -1,13 +1,11 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
-const { Users } = require("../models");
+const UsersRouter = require("./usersRoute.js");
 const router = express.Router();
 
-//작성필요
-//const = require("../controllers/users.controller.js");
-//const = new ();
+router.use("/api", UsersRouter);
 
-//lrouter.post("/signup", UserController.);
-//router.post("/login", UserController.);
+router.get("/", (req, res) => {
+  res.send("정상적으로 요청되었습니다.");
+});
 
 module.exports = router;

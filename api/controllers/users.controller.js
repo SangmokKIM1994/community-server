@@ -1,50 +1,41 @@
-const UserService = require("../services/users.service");
-const jwt = require("jsonwebtoken");
+const UsersService = require("../services/users.service");
+// const jwt = require("jsonwebtoken");
 
 class UsersController {
-  userService = new UserService();
+  usersService = new UsersService();
 
   //회원가입
   createSignup = async (req, res, next) => {
-    const { nickname, password, confirm } = req.body;
-    //서비스 계층에 구현된 createPost로직을 실행한다.
-    const createSignupData = await this.userService.createSignup(
-      nickname,
-      password,
-      confirm
-    );
+    const { username, nickname, password } = req.body;
 
-    res.status(201).json({ data: createSignupData });
+    await this.usersService.createSignup(username, nickname, password );
+
+    res.status(201).json({
+      success: true,
+      message: "회원가입을 성공하였습니다.",
+    });
   };
 
   //로그인
   createLogin = async (req, res, next) => {
-    const { nickname, password } = req.body;
-    const loginData = await this.userService.createLogin(
-      nickname,
-      password
-  );
-  
+    const { username, password } = req.body;
+    await this.usersService.createLogin(username, password);
 
-    const token = jwt.sign(
-      { nickname: loginData.nickname },
-      "customized-secret-key"
-    );
-    res.cookie("authorization", `Bearer ${token}`);
-    res.status(200).json({ data: loginData });
-    return {
-      nickname: loginData.nickname,
-      password: loginData.password,
-    };
+    res.status(201).json({
+      success: true,
+      message: "로그인을 성공하였습니다.",
+    });
   };
 }
+module.exports = UsersController;
 
-module.exports =UsersController;
-
-
-
-//서비스에서 처리할 로직
-//   const token = jwt.login({ nickname: loginData.nickname }, "customized-secret-key");
-//   res.cookie("authorization", `Bearer ${token}`);
-//   res.status(200).json({ data: loginData })
-// }
+// const token = jwt.sign(
+//   { nickname: loginData.nickname },
+//   "customized-secret-key"
+// );
+// res.cookie("authorization", `Bearer ${token}`);
+// res.status(200).json({ data: loginData });
+// return {
+//   nickname: loginData.nickname,
+//   password: loginData.password,
+// };
