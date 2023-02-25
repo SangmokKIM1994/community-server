@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
+
 const CommentsController = require("../controllers/comments.controller.js");
 const commentsRouter = new CommentsController();
+
 
 // 특정 게시물의 댓글 작성
 router.post("/posts/:postId/comments", commentsRouter.createComment);

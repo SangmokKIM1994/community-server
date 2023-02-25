@@ -9,7 +9,7 @@ class PostsController {
 
         await this.postsService.createPost(title,content);
 
-        res.status(201).json({message:"게시글이 생성되었습니다."})
+        res.status(201).json({success:true,message:"게시글이 생성되었습니다."})
     }
 
     getAllPosts = async(req,res,next) => {
@@ -41,7 +41,7 @@ class PostsController {
 
         await this.postsService.deletePost(postId)
 
-        res.status.json({success:true,massege : "게시글이 삭제되었습니다."})
+        res.status(200).json({success:true,massege : "게시글이 삭제되었습니다."})
     }
 
 }

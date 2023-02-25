@@ -13,27 +13,35 @@ class PostsRepository{
     }
 
     getAllPosts = async() => {
-        const allPostsData = await Posts.findAll({  attributes: [   "postId",
-                                                                    "title",
-                                                                    // "UserId",
-                                                                    "createdAt",
-                                                                    "updatedAt",]
-        // [sequelize.fn("count", sequelize.col("Comments.postId"),"commentsCount"),]],
-        // include: [{ model:Users,attributes: ["nickname"]}],
-        // order:[["createdAt","DESC"]],
+        const allPostsData = await Posts.findAll({  
+            attributes: [   
+                "postId",
+                "title",
+                "UserId",
+                "createdAt",
+                "updatedAt",]
+            // [sequelize.fn("COUNT", sequelize.col("comments.postId")),"commentsCount"]],
+            // include: [  { model:users,attributes: ["nickname"]},
+            // { model:comments,attributes: []}],
+            // group: ["posts.postId"],
+            // order:[["createdAt","DESC"]],
         })
 
         return allPostsData
     }
     
     findOnePost = async(postId) => {
-        const postData = await Posts.findOne({  attributes: [   "postId",
-                                                                "title",
-                                                                // "UserId",
-                                                                "createdAt",
-                                                                "updatedAt",]
-// [sequelize.fn("count", sequelize.col("Comments.postId"),"commentsCount"),]],
-// include: [{ model:Users,attributes: ["nickname"]}],
+        const postData = await Posts.findOne({where:{postId},
+            attributes: [
+                "postId",
+                "title",
+                "UserId",
+                "createdAt",
+                "updatedAt",]
+                // [sequelize.fn("COUNT", sequelize.col("comments.postId")),"commentsCount"]],
+                // include: [  { model:users,attributes: ["nickname"]},
+                //             { model:comments,attributes: []}],
+                // group: ["posts.postId"],
 })
         return postData
     }
