@@ -1,6 +1,15 @@
+const { Comments } = require("../../db/models");
+
 module.exports = class CommentRepository {
   // 댓글 작성
-  createComment = async (params) => {};
+  createComment = async ({ postId, content }) => {
+    const newComment = await Comments.create({
+      postId,
+      content,
+      userId: 1,
+    });
+    return newComment;
+  };
 
   // 댓글 목록 조회
   getCommentsByPost = async (postId) => {};
