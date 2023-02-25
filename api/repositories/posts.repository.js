@@ -15,11 +15,13 @@ class PostsRepository{
     getAllPosts = async() => {
         const allPostsData = await Posts.findAll({  attributes: [   "postId",
                                                                     "title",
-                                                                    // "UserId",
+                                                                    "UserId",
                                                                     "createdAt",
                                                                     "updatedAt",]
-        // [sequelize.fn("count", sequelize.col("Comments.postId"),"commentsCount"),]],
-        // include: [{ model:Users,attributes: ["nickname"]}],
+        // [sequelize.fn("COUNT", sequelize.col("comments.postId")),"commentsCount"]],
+        // include: [  { model:users,attributes: ["nickname"]},
+        // { model:comments,attributes: []}],
+        // group: ["posts.postId"],
         // order:[["createdAt","DESC"]],
         })
 
@@ -29,11 +31,13 @@ class PostsRepository{
     findOnePost = async(postId) => {
         const postData = await Posts.findOne({  attributes: [   "postId",
                                                                 "title",
-                                                                // "UserId",
+                                                                "UserId",
                                                                 "createdAt",
                                                                 "updatedAt",]
-// [sequelize.fn("count", sequelize.col("Comments.postId"),"commentsCount"),]],
-// include: [{ model:Users,attributes: ["nickname"]}],
+                                                                // [sequelize.fn("COUNT", sequelize.col("comments.postId")),"commentsCount"]],
+                                                                // include: [  { model:users,attributes: ["nickname"]},
+                                                                //             { model:comments,attributes: []}],
+                                                                // group: ["posts.postId"],
 })
         return postData
     }

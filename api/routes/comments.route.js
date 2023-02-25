@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const CommentController = require("../controllers/comments.controllers/js");
+const CommentController = require("../controllers/comments.controller");
 const commentsRouter = new CommentController();
 
 // 특정 게시물의 댓글 작성

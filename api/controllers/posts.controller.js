@@ -9,7 +9,7 @@ class PostsController {
 
         await this.postsService.createPost(title,content);
 
-        res.status(201).json({message:"게시글이 생성되었습니다."})
+        res.status(201).json({success:true,message:"게시글이 생성되었습니다."})
     }
 
     getAllPosts = async(req,res,next) => {
@@ -21,7 +21,7 @@ class PostsController {
     findOnePost = async(req,res,next) => {
         const {postId} = req.params
 
-        const postData = await this.postsService.findOnePost(postId);
+        const postData = await this.postsService.findOnePost({where:{postId}});
 
         res.status(200).json({success:true,data:postData});
     }
@@ -31,7 +31,7 @@ class PostsController {
         const {postId} = req.params;
         const {title, content} = req.body;
 
-        await this.postsService.editPost(postId,title,content);
+        await this.postsService.editPost({where:{postId}},{title,content});
 
         res.status(200).json({success:true,massege : "게시글이 수정되었습니다."})
     }
@@ -39,9 +39,9 @@ class PostsController {
     deletePost = async(req,res,next) => {
         const {postId} = req.params
 
-        await this.postsService.deletePost(postId)
+        await this.postsService.deletePost({where:{postId}})
 
-        res.status.json({success:true,massege : "게시글이 삭제되었습니다."})
+        res.status(200).json({success:true,massege : "게시글이 삭제되었습니다."})
     }
 
 }
