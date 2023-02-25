@@ -1,4 +1,4 @@
-const CommentsService = require("../services/comments.services.js");
+const CommentsService = require("../services/comments.service.js");
 
 module.exports = class CommentsController {
   constructor() {
