@@ -8,7 +8,7 @@ class UsersController {
   createSignup = async (req, res, next) => {
     const { username, nickname, password } = req.body;
 
-    await this.usersService.createSignup(username, nickname, password );
+    await this.usersService.createSignup(username, nickname, password);
 
     res.status(201).json({
       success: true,
@@ -19,6 +19,7 @@ class UsersController {
   //로그인
   createLogin = async (req, res, next) => {
     const { username, password } = req.body;
+
     await this.usersService.createLogin(username, password);
 
     res.status(201).json({
