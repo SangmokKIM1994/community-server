@@ -29,7 +29,14 @@ module.exports = class CommentRepository {
 
   // 특정 댓글 조회
   getCommentById = async ({ commentId }) => {
-    const comment = await Comments.findByPk(commentId);
+    const comment = await Comments.findByPk(commentId, {
+      attributes: ["commentId", "comment", "userId", "createdAt", "updatedAt"],
+      include: {
+        model: Users,
+        attributes: ["nickname"],
+      },
+      raw: true,
+    }).then((model) => parseModelToFaltObjet(model));
     return comment;
   };
 
