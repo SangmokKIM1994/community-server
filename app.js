@@ -1,5 +1,6 @@
 const cookieparser = require("cookie-parser");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const express = require("express");
 const router = require("./api/routes");
 const errorMiddleware = require("./api/middlewares/error.middleware.js");
@@ -8,6 +9,12 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
+
+app.use(
+  cors({
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+  })
+);
 
 app.use(express.json());
 app.use(cookieparser());
