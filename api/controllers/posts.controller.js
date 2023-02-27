@@ -41,7 +41,7 @@ class PostsController {
   };
 
   editPost = async (req, res, next) => {
-    // const {userId} = res.locals.user;
+    // const { userId } = res.locals.user;
     const { postId } = req.params;
     const { title, content } = req.body;
 
