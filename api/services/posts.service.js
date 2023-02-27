@@ -25,7 +25,7 @@ class PostsService {
     findOnePost = async(postId) => {
         const postData = await this.postsRepository.findOnePost(postId);
         
-        if(!PostData.postId){
+        if(!postData.postId){
             throw new Error("게시글 조회에 실패하였습니다.");
         }
         return postData
@@ -34,7 +34,7 @@ class PostsService {
     editPost = async(postId,title,content) => {
         const postData = await this.postsRepository.editPost(postId,title,content);
 
-        if(!PostData.postId){
+        if(!postData.postId){
             throw new Error("댓글 수정에 실패하였습니다.");
         }
         return postData
@@ -43,7 +43,7 @@ class PostsService {
     deletePost = async(postId) => {
         const postData = await this.postsRepository.deletePost(postId);
 
-        if(!PostData.postId){
+        if(!postData.postId){
             throw new Error("댓글 삭제에 실패하였습니다.");
         }
         return postData
