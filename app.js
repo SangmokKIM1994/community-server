@@ -13,8 +13,13 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cookieparser());
+// app.get('/logout', function (req, res) {
+//   return res.clearCookie('user').end();
+// })
+
 
 app.use("/api", router);
+
 
 app.use(errorMiddleware);
 
@@ -23,13 +28,3 @@ app.listen(PORT, () => {
 });
 
 
-// // app.js//sequelize model sync script
-
-// const { sequelize } = require('./models/index.js');
-
-// async function main() {
-//   // model을 이용해 데이터베이스에 테이블을 삭제 후 생성합니다.
-//   await sequelize.sync({ force: true }); //모델동기화
-// }
-
-// main();

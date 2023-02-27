@@ -19,7 +19,7 @@ class PostsController {
     }
 
     findOnePost = async(req,res,next) => {
-        const {postId} = req.params
+        const {postId} = req.params;
 
         const postData = await this.postsService.findOnePost(postId);
 
