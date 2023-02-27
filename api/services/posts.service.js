@@ -23,30 +23,30 @@ class PostsService {
     }
 
     findOnePost = async(postId) => {
-        const PostData = await this.postsRepository.findOnePost(postId);
+        const postData = await this.postsRepository.findOnePost(postId);
         
         if(!PostData.postId){
             throw new Error("게시글 조회에 실패하였습니다.");
         }
-        return PostData
+        return postData
     }
 
     editPost = async(postId,title,content) => {
-        const PostData = await this.postsRepository.editPost(postId,title,content);
+        const postData = await this.postsRepository.editPost(postId,title,content);
 
         if(!PostData.postId){
             throw new Error("댓글 수정에 실패하였습니다.");
         }
-        return PostData
+        return postData
     }
 
     deletePost = async(postId) => {
-        const PostData = await this.postsRepository.deletePost(postId);
+        const postData = await this.postsRepository.deletePost(postId);
 
         if(!PostData.postId){
             throw new Error("댓글 삭제에 실패하였습니다.");
         }
-        return PostData
+        return postData
     }
     
 
