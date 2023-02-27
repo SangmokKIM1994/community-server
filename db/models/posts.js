@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: "postId",
         foreignKey: "postId",
       });
+
       this.hasMany(models.Likes, {
         sourceKey: "postId",
         foreignKey: "postId",
@@ -47,6 +48,14 @@ module.exports = (sequelize, DataTypes) => {
       content: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      filename: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      fileUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       commentsCount: {
         type: DataTypes.INTEGER,
