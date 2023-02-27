@@ -1,33 +1,33 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Likes', {
+    await queryInterface.createTable("Likes", {
       likeId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       userId: {
-        allowNull: false, 
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users', 
-          key: 'userId', 
-        } 
+          model: "Users",
+          key: "userId",
+        },
       },
       postId: {
-        allowNull: false, 
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Posts', 
-          key: 'postId', 
-        } 
+          model: "Posts",
+          key: "postId",
+        },
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Likes');
-  }
+    await queryInterface.dropTable("Likes");
+  },
 };

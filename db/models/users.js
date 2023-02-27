@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     /**
@@ -12,54 +10,57 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.Posts, {
-        sourceKey: 'userId', 
-        foreignKey: 'userId', 
+        sourceKey: "userId",
+        foreignKey: "userId",
       });
-  
+
       this.hasMany(models.Comments, {
-        sourceKey: 'userId', 
-        foreignKey: 'userId', 
+        sourceKey: "userId",
+        foreignKey: "userId",
       });
       this.hasMany(models.Likes, {
-        sourceKey: 'userId', 
-        foreignKey: 'userId', 
+        sourceKey: "userId",
+        foreignKey: "userId",
       });
     }
   }
-  Users.init({
-    userId: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
+  Users.init(
+    {
+      userId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+      username: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      nickname: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
     },
-    username: {
-      type: DataTypes.STRING,
-      unique:true,
-      allowNull: false
-    },
-    nickname: {
-      type: DataTypes.STRING,
-      unique:true,
-      allowNull: false
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    createdAt: {
-      allowNull: false, 
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    updatedAt: {
-      allowNull: false, 
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
+    {
+      sequelize,
+      modelName: "Users",
     }
-  }, {
-    sequelize,
-    modelName: 'Users',
-  });
+  );
   return Users;
 };
