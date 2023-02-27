@@ -12,10 +12,10 @@ class LikesRepository {
       Likes.destroy({
         where: { userId: findLike.userId, postId: findLike.postId },
       });
-      return "좋아요를 취소했습니다.";
+      return "좋아요가 해제되었습니다";
     } else if (!findLike) {
       Likes.create({ userId, postId });
-      return "좋아요를 눌렀습니다.";
+      return "좋아요가 등록되었습니다.";
     }
   };
 }
