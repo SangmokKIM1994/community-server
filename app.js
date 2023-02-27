@@ -9,6 +9,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
+app.use(
+  cors({
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+  })
+);
+
 app.use(express.json());
 app.use(cookieparser());
 
