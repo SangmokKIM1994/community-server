@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Posts extends Model {
+  class Likes extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,23 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
       this.belongsTo(models.Users, { 
         targetKey: 'userId', 
         foreignKey: 'userId', 
       });
-
-      this.hasMany(models.Comments, {
-        sourceKey: 'postId', 
-        foreignKey: 'postId', 
-      });
-      this.hasMany(models.Likes, {
-        sourceKey: 'postId', 
+      this.belongsTo(models.Posts, { 
+        targetKey: 'postId', 
         foreignKey: 'postId', 
       });
     }
   }
-  Posts.init({
-    postId: {
+  Likes.init({
+    likeId: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
@@ -41,35 +37,20 @@ module.exports = (sequelize, DataTypes) => {
         key: 'userId', 
       }
     },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    content: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    commentsCount: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
-    },
-    likesCount: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
-    },
-    createdAt: {
+    postId: {
       allowNull: false, 
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'posts',
+        key: 'postId', 
+      }
     },
-    updatedAt: {
-      allowNull: false, 
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    }
-  }, {
+  },
+   {
+    timestamp: false,
     sequelize,
-    modelName: 'Posts',
+    modelName: 'Likes',
+    
   });
-  return Posts;
+  return Likes;
 };

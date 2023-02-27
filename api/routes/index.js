@@ -2,11 +2,13 @@ const express = require("express");
 const UsersRouter = require("./usersRoute.js");
 const PostsRouter = require("./posts.route");
 const CommentsRouter = require("./comments.route.js");
+const LikesRouter = require("./likes.routes")
 const router = express.Router();
 
 router.use("/", UsersRouter);
 router.use("/posts", PostsRouter);
 router.use("/", CommentsRouter);
+router.use("/likes",LikesRouter)
 
 
 router.get("/", (req, res) => {
