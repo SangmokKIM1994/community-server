@@ -8,7 +8,7 @@ class LikesService {
 
     if (!findPost) {
       throw new Error("게시글 조회를 실패했습니다.");
-    } else if (findPost) {
+    } else {
       return await this.likesRepository.like(userId, postId);
     }
   };
