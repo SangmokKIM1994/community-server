@@ -25,6 +25,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      filename: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      fileUrl: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       commentsCount: {
         type: Sequelize.INTEGER,
         defaultValue: 0,

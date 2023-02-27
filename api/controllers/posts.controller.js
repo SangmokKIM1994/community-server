@@ -5,10 +5,10 @@ class PostsController {
 
   createPost = async (req, res, next) => {
     // const {userId} = res.locals.user;
-    const { title, content } = req.body;
+    const { title, content, image } = req.body;
 
     try {
-      await this.postsService.createPost(title, content);
+      await this.postsService.createPost(title, content, image);
 
       res
         .status(201)
