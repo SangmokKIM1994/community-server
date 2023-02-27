@@ -12,16 +12,17 @@ class UsersService {
       nickname,
       password
   });
+  return signupData
     // const emailType = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z\-]+/;
     // const passwordType = /^[a-zA-Z0-9](6,10)&/;
      
-    if (!signupData.username) {
-      throw new Error (
+    // if (!signupData.username) {
+    //   throw new Error (
         
-         "중복된 이메일이 존재합니다."
+    //      "중복된 이메일이 존재합니다."
        
-      )
-    }
+    //   )
+    
     
     // if (signupData.password !== passwordType) {
     //   return res.status(401).json({ success: false,
