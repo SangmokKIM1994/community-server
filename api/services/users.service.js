@@ -5,10 +5,10 @@ class UsersService {
 
   //회원가입 서비스
   //회원가입실패 400
-  createSignup = async ({ username, nickname, password }) => {
+  createSignup = async ({ email, nickname, password }) => {
    
     const signupData = await this.usersRepository.createSignup({
-      username,
+      email,
       nickname,
       password
   });
@@ -16,7 +16,7 @@ class UsersService {
     // const emailType = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z\-]+/;
     // const passwordType = /^[a-zA-Z0-9](6,10)&/;
      
-    // if (!signupData.username) {
+    // if (!signupData.email) {
     //   throw new Error (
         
     //      "중복된 이메일이 존재합니다."
@@ -31,14 +31,14 @@ class UsersService {
   };
 
   // 로그인 서비스
-  createLogin = async ({ username, password }) => {
+  createLogin = async ({ email, password }) => {
    
     const loginData = await this.usersRepository.createLogin({
-      username,
+      email,
       password
   });
     if (!loginData) {
-      res.status(401).json({ success: false, message: "로그인에 실패하였습니다." });
+      res.status(401).json({  message: "로그인에 실패하였습니다." });
     }
 
     return loginData;
