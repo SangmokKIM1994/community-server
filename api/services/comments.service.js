@@ -32,12 +32,15 @@ module.exports = class CommentsService {
   };
 
   // 댓글 수정
-  editComment = async ({ commentId, comment }) => {
+  editComment = async ({ userId, commentId, comment }) => {
     const existComment = await this.commentsRepository.getCommentById({
       commentId,
     });
     if (!existComment) {
       throw new Error("댓글 조회에 실패하였습니다.");
+    }
+    if (!existComment.userId === userId) {
+      throw new Error("권한이 없습니다.");
     }
     const updated = await this.commentsRepository.editComment({
       commentId,
@@ -50,12 +53,15 @@ module.exports = class CommentsService {
   };
 
   // 댓글 삭제
-  deleteComment = async ({ commentId }) => {
+  deleteComment = async ({ userId, commentId }) => {
     const existComment = await this.commentsRepository.getCommentById({
       commentId,
     });
     if (!existComment) {
       throw new Error("댓글 조회에 실패하였습니다.");
+    }
+    if (!existComment.userId === userId) {
+      throw new Error("권한이 없습니다.");
     }
     const deleted = await this.commentsRepository.deleteComment({
       commentId,
