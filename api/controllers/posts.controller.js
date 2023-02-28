@@ -28,8 +28,10 @@ class PostsController {
     }
   };
 
+
   findOnePost = async (req, res, next) => {
     const { postId } = req.params;
+
 
     try {
       const postData = await this.postsService.findOnePost(postId);
