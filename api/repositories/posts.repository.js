@@ -2,9 +2,8 @@ const { Comments, Users, Posts, Likes, sequelize } = require("../../db/models");
 const parseModelToFaltObjet = require("../helpers/parse.sequelize.helper.js");
 
 class PostsRepository {
-  createPost = async (title, content) => {
-    // const userInfo = await users.findOne({where:{userId}})
-    const createPostData = await Posts.create({ title, content });
+  createPost = async (userId, title, content) => {
+    const createPostData = await Posts.create({ userId, title, content });
 
     return createPostData;
   };
@@ -42,10 +41,9 @@ class PostsRepository {
     return allPostsData;
   };
 
-  findOnePost = async (postId) => {
-    const userId = 1
-    const findLikeAll = await Likes.findAll({where : {postId}})
-    const findLike = await Likes.findOne({where:{userId,postId}})
+  findOnePost = async (postId, userId) => {
+    const findLikeAll = await Likes.findAll({ where: { postId } });
+    const findLike = await Likes.findOne({ where: { userId, postId } });
     const postData = await Posts.findOne({
       where: { postId },
       attributes: [
@@ -66,27 +64,27 @@ class PostsRepository {
       ],
       raw: true,
     }).then((model) => parseModelToFaltObjet(model));
-    postData.likesCount = findLikeAll.length
-    if(!findLike){
-      postData.likeStatus = false
+    postData.likesCount = findLikeAll.length;
+    if (!findLike) {
+      postData.likeStatus = false;
     } else {
-      postData.likeStatus = true
+      postData.likeStatus = true;
     }
 
     return postData;
   };
 
-  editPost = async (postId, title, content) => {
+  editPost = async (userId, postId, title, content) => {
     const update = await Posts.update(
       { title, content },
-      { where: { postId } }
+      { where: { userId, postId } }
     );
 
     return update;
   };
 
-  deletePost = async (postId) => {
-    return await Posts.destroy({ where: { postId } });
+  deletePost = async (userId, postId) => {
+    return await Posts.destroy({ where: { userId, postId } });
   };
 }
 
