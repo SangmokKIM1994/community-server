@@ -41,7 +41,9 @@ class PostsRepository {
     return allPostsData;
   };
 
-  findOnePost = async (postId) => {
+  findOnePost = async (postId, userId) => {
+    const findLikeAll = await Likes.findAll({ where: { postId } });
+    const findLike = await Likes.findOne({ where: { userId, postId } });
     const postData = await Posts.findOne({
       where: { postId },
       attributes: [
@@ -62,6 +64,12 @@ class PostsRepository {
       ],
       raw: true,
     }).then((model) => parseModelToFaltObjet(model));
+    postData.likesCount = findLikeAll.length;
+    if (!findLike) {
+      postData.likeStatus = false;
+    } else {
+      postData.likeStatus = true;
+    }
 
     return postData;
   };

@@ -4,7 +4,6 @@ class UsersRepository {
   //회원가입 리포
   createSignup = async ({ email, nickname, password }) => {
     const result = await Users.create({ email, nickname, password });
-
     return result;
   };
 
