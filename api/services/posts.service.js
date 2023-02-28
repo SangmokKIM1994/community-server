@@ -20,6 +20,7 @@ class PostsService {
   getAllPosts = async () => {
     const allPostsData = await this.postsRepository.getAllPosts();
     const findLikeCount = await this.postsRepository.findLikesCount();
+
     if (!allPostsData) {
       throw new Error("게시글 조회에 실패하였습니다.");
     }
@@ -36,6 +37,7 @@ class PostsService {
       userId,
       postId
     );
+
     if (!postData.postId) {
       throw new Error("게시글 조회에 실패하였습니다.");
     }
