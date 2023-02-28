@@ -1,4 +1,4 @@
-const { Comments, Users, Posts, sequelize } = require("../../db/models");
+const { Comments, Users, Posts, Likes, sequelize } = require("../../db/models");
 const parseModelToFaltObjet = require("../helpers/parse.sequelize.helper.js");
 
 class PostsRepository {
@@ -7,6 +7,19 @@ class PostsRepository {
     const createPostData = await Posts.create({ title, content });
 
     return createPostData;
+  };
+
+  findLikes = async () => {
+    const findLike = await Posts.findAll({
+      attributes: [
+        [sequelize.fn("COUNT", sequelize.col("Likes.postId")), "likesCount"],
+      ],
+      include: [{ model: Likes, attributes: [] }],
+      group: ["Posts.postId"],
+      order: [["createdAt", "DESC"]],
+      raw: true,
+    }).then((model) => model.map(parseModelToFaltObjet));
+    return findLike;
   };
 
   getAllPosts = async () => {
@@ -30,6 +43,9 @@ class PostsRepository {
   };
 
   findOnePost = async (postId) => {
+    const userId = 1
+    const findLikeAll = await Likes.findAll({where : {postId}})
+    const findLike = await Likes.findOne({where:{userId,postId}})
     const postData = await Posts.findOne({
       where: { postId },
       attributes: [
@@ -50,8 +66,13 @@ class PostsRepository {
       ],
       raw: true,
     }).then((model) => parseModelToFaltObjet(model));
+    postData.likesCount = findLikeAll.length
+    if(!findLike){
+      postData.likeStatus = false
+    } else {
+      postData.likeStatus = true
+    }
 
-    console.log(postData);
     return postData;
   };
 

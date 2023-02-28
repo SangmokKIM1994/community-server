@@ -18,11 +18,13 @@ class PostsService {
 
   getAllPosts = async () => {
     const allPostsData = await this.postsRepository.getAllPosts();
-
-    if (allPostsData.length === 0) {
+    const findLikeCount = await this.postsRepository.findLikes();
+    if (!allPostsData) {
       throw new Error("게시글 조회에 실패하였습니다.");
     }
-
+    for (let i = 0; i < allPostsData.length; i++) {
+      allPostsData[i].likesCount = findLikeCount[i].likesCount;
+    }
     return allPostsData;
   };
 
