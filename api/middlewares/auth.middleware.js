@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
       });
   }
   try {
-    const decodedToken = jwt.verify(token, "customized-secret-key");
+    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
     const userId = decodedToken.userId;
 
     const user = await Users.findOne({ where: { userId } });

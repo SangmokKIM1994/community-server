@@ -6,7 +6,7 @@ class UsersService {
   //회원가입 서비스
   //회원가입실패 400
   createSignup = async ({ username, nickname, password }) => {
-    console.log("ser", username, nickname, password)
+   
     const signupData = await this.usersRepository.createSignup({
       username,
       nickname,
@@ -32,7 +32,7 @@ class UsersService {
 
   // 로그인 서비스
   createLogin = async ({ username, password }) => {
-    console.log(username);
+   
     const loginData = await this.usersRepository.createLogin({
       username,
       password

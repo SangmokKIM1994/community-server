@@ -9,7 +9,7 @@ class UsersController {
   createSignup = async (req, res, next) => {
     
     const { username, nickname, password } = req.body;
-    console.log("ct", username, nickname, password)
+   
     
     try{
     await this.usersService.createSignup({ username, nickname, password });
@@ -35,7 +35,7 @@ createLogin = async (req, res, next) => {
     const loginData = await this.usersService.createLogin({ username, password });
     const token = jwt.sign(
       { username: loginData.username },
-      "customized-secret-key"
+      process.env.JWT_KEY
     );
     res.cookie("authorization", `Bearer ${token}`);
     res.status(201).json({
