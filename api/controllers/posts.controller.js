@@ -26,9 +26,11 @@ class PostsController {
     }
   };
 
+
   findOnePost = async (req, res, next) => {
     const { userId } = res.locals.user;
     const { postId } = req.params;
+
 
     try {
       const postData = await this.postsService.findOnePost(userId, postId);

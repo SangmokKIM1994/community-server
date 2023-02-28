@@ -27,11 +27,13 @@ class UsersController {
     const token = jwt.sign({ userId: loginData.userId }, process.env.JWT_KEY, {
       expiresIn: "5m",
     });
+
     res.cookie("authorization", `Bearer ${token}`);
     res.status(201).json({
       message: "로그인을 성공하였습니다.",
     });
   };
+
 }
 
 module.exports = UsersController;
