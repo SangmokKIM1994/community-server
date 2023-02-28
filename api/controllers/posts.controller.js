@@ -4,11 +4,11 @@ class PostsController {
   postsService = new PostsService();
 
   createPost = async (req, res, next) => {
-    // const {userId} = res.locals.user;
+    const { userId } = res.locals.user;
     const { title, content, image } = req.body;
 
     try {
-      await this.postsService.createPost(title, content, image);
+      await this.postsService.createPost(userId, title, content, image);
 
       res.status(201).json({ message: "게시글이 생성되었습니다." });
     } catch (err) {
@@ -26,13 +26,12 @@ class PostsController {
     }
   };
 
-
   findOnePost = async (req, res, next) => {
+    const { userId } = res.locals.user;
     const { postId } = req.params;
 
-
     try {
-      const postData = await this.postsService.findOnePost(postId);
+      const postData = await this.postsService.findOnePost(userId, postId);
 
       res.status(200).json({ data: postData });
     } catch (err) {
@@ -41,12 +40,12 @@ class PostsController {
   };
 
   editPost = async (req, res, next) => {
-    // const { userId } = res.locals.user;
+    const { userId } = res.locals.user;
     const { postId } = req.params;
     const { title, content } = req.body;
 
     try {
-      await this.postsService.editPost(postId, title, content);
+      await this.postsService.editPost(userId, postId, title, content);
 
       res.status(200).json({ massege: "게시글이 수정되었습니다." });
     } catch (err) {
@@ -55,10 +54,11 @@ class PostsController {
   };
 
   deletePost = async (req, res, next) => {
+    const { userId } = res.locals.user;
     const { postId } = req.params;
 
     try {
-      await this.postsService.deletePost(postId);
+      await this.postsService.deletePost(userId, postId);
 
       res.status(200).json({ massege: "게시글이 삭제되었습니다." });
     } catch (err) {
