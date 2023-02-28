@@ -5,6 +5,7 @@ class UsersService {
 
   //회원가입 서비스
   createSignup = async ({ email, nickname, password }) => {
+    // 에러를 검사하는 모든 구문
     const signupData = await this.usersRepository.createSignup({
       email,
       nickname,
@@ -32,6 +33,7 @@ class UsersService {
       email,
       password,
     });
+
     if (!loginData) {
       throw new Error("로그인에 실패하였습니다.");
     }
