@@ -73,7 +73,6 @@ class PostsRepository {
   };
 
   findLikeState = async (userId, postId) => {
-    console.log(userId);
     const findLike = await Likes.findOne({ where: { userId, postId } });
     if (!findLike) {
       return false;
