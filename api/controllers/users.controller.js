@@ -10,10 +10,12 @@ class UsersController {
     const { email, nickname, password } = req.body;
 
     try {
-      await this.usersService.createSignup({ email, nickname, password });
-      return res
-        .status(201)
-        .json({ success: true, message: "회원가입을 성공하였습니다." });
+      await this.usersService.createSignup({
+        email,
+        nickname,
+        password,
+      });
+      res.status(201).json({ message: "회원가입을 성공하셨습니다." });
     } catch (err) {
       next(err);
     }
@@ -31,9 +33,9 @@ class UsersController {
     res.cookie("authorization", `Bearer ${token}`);
     res.status(201).json({
       message: "로그인을 성공하였습니다.",
+      token,
     });
   };
-
 }
 
 module.exports = UsersController;
