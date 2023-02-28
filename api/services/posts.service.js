@@ -19,7 +19,7 @@ class PostsService {
 
   getAllPosts = async () => {
     const allPostsData = await this.postsRepository.getAllPosts();
-    const findLikeCount = await this.postsRepository.findLikes();
+    const findLikeCount = await this.postsRepository.findLikesCount();
     if (!allPostsData) {
       throw new Error("게시글 조회에 실패하였습니다.");
     }
@@ -30,8 +30,12 @@ class PostsService {
   };
 
   findOnePost = async (userId, postId) => {
-    const postData = await this.postsRepository.findOnePost(userId, postId);
-
+    const postData = await this.postsRepository.findOnePost(postId);
+    postData.likesCount = await this.postsRepository.findOneLikeCount(postId);
+    postData.likeState = await this.postsRepository.findLikeState(
+      userId,
+      postId
+    );
     if (!postData.postId) {
       throw new Error("게시글 조회에 실패하였습니다.");
     }
@@ -39,6 +43,7 @@ class PostsService {
   };
 
   editPost = async (userId, postId, title, content) => {
+    const findPost = await this.postsRepository.findHavePost(userId, postId);
     const postData = await this.postsRepository.editPost(
       userId,
       postId,
@@ -46,16 +51,17 @@ class PostsService {
       content
     );
 
-    if (!postData.postId) {
+    if (!findPost || !postData) {
       throw new Error("댓글 수정에 실패하였습니다.");
     }
     return postData;
   };
 
   deletePost = async (userId, postId) => {
+    const findPost = await this.postsRepository.findHavePost(userId, postId);
     const postData = await this.postsRepository.deletePost(userId, postId);
 
-    if (!postData.postId) {
+    if (!findPost) {
       throw new Error("댓글 삭제에 실패하였습니다.");
     }
     return postData;
