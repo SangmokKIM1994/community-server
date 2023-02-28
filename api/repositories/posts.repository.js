@@ -8,7 +8,7 @@ class PostsRepository {
     return createPostData;
   };
 
-  findLikes = async () => {
+  findLikesCount = async () => {
     const findLike = await Posts.findAll({
       attributes: [
         [sequelize.fn("COUNT", sequelize.col("Likes.postId")), "likesCount"],
@@ -74,6 +74,27 @@ class PostsRepository {
     return postData;
   };
 
+  findOneLikeCount = async (postId) => {
+    const findLikeAll = await Likes.findAll({ where: { postId } });
+
+    return findLikeAll.length;
+  };
+
+  findLikeState = async (userId, postId) => {
+    const findLike = await Likes.findOne({ where: { userId, postId } });
+    if (!findLike) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  findHavePost = async (userId, postId) => {
+    const findPost = await Posts.findOne({ where: { userId, postId } });
+
+    return findPost;
+  };
+
   editPost = async (userId, postId, title, content) => {
     const update = await Posts.update(
       { title, content },
@@ -84,7 +105,8 @@ class PostsRepository {
   };
 
   deletePost = async (userId, postId) => {
-    return await Posts.destroy({ where: { userId, postId } });
+    const deletePost = await Posts.destroy({ where: { userId, postId } });
+    return deletePost;
   };
 }
 

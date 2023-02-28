@@ -16,7 +16,7 @@ router.post(
 router.get("/posts/:postId/comments", commentsController.getCommentsByPost);
 
 // 특정 게시물의 댓글 수정
-router.patch(
+router.put(
   "/comments/:commentId",
   authMiddleware,
   commentsController.editComment
