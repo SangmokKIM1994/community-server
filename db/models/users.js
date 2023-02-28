@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      username: {
+      email: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
