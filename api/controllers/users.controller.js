@@ -38,7 +38,7 @@ class UsersController {
       );
 
       res.cookie("authorization", `Bearer ${token}`);
-      return res.status(201).json({
+      return res.status(200).json({
         message: "로그인을 성공하였습니다.",
         token,
       });
