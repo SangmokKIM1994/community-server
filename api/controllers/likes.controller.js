@@ -9,7 +9,7 @@ class LikesController {
     try {
       const data = await this.likesService.like(userId, postId);
 
-      res.status(200).json({ success: true, message: data });
+      res.status(200).json({ message: data });
     } catch (err) {
       next(err);
     }
