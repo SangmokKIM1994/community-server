@@ -4,7 +4,7 @@ class LikesController {
   likesService = new LikesService();
 
   like = async (req, res, next) => {
-    const userId = 1;
+    const { userId } = res.locals.user;
     const { postId } = req.params;
     try {
       const data = await this.likesService.like(userId, postId);
