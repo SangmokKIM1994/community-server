@@ -1,12 +1,24 @@
-const { Comments, Users, Posts, sequelize } = require("../../db/models");
+const { Comments, Users, Posts, Likes, sequelize } = require("../../db/models");
 const parseModelToFaltObjet = require("../helpers/parse.sequelize.helper.js");
 
 class PostsRepository {
-  createPost = async (title, content) => {
-    // const userInfo = await users.findOne({where:{userId}})
-    const createPostData = await Posts.create({ title, content });
+  createPost = async (userId, title, content) => {
+    const createPostData = await Posts.create({ userId, title, content });
 
     return createPostData;
+  };
+
+  findLikes = async () => {
+    const findLike = await Posts.findAll({
+      attributes: [
+        [sequelize.fn("COUNT", sequelize.col("Likes.postId")), "likesCount"],
+      ],
+      include: [{ model: Likes, attributes: [] }],
+      group: ["Posts.postId"],
+      order: [["createdAt", "DESC"]],
+      raw: true,
+    }).then((model) => model.map(parseModelToFaltObjet));
+    return findLike;
   };
 
   getAllPosts = async () => {
@@ -29,7 +41,9 @@ class PostsRepository {
     return allPostsData;
   };
 
-  findOnePost = async (postId) => {
+  findOnePost = async (postId, userId) => {
+    const findLikeAll = await Likes.findAll({ where: { postId } });
+    const findLike = await Likes.findOne({ where: { userId, postId } });
     const postData = await Posts.findOne({
       where: { postId },
       attributes: [
@@ -50,22 +64,27 @@ class PostsRepository {
       ],
       raw: true,
     }).then((model) => parseModelToFaltObjet(model));
+    postData.likesCount = findLikeAll.length;
+    if (!findLike) {
+      postData.likeStatus = false;
+    } else {
+      postData.likeStatus = true;
+    }
 
-    console.log(postData);
     return postData;
   };
 
-  editPost = async (postId, title, content) => {
+  editPost = async (userId, postId, title, content) => {
     const update = await Posts.update(
       { title, content },
-      { where: { postId } }
+      { where: { userId, postId } }
     );
 
     return update;
   };
 
-  deletePost = async (postId) => {
-    return await Posts.destroy({ where: { postId } });
+  deletePost = async (userId, postId) => {
+    return await Posts.destroy({ where: { userId, postId } });
   };
 }
 

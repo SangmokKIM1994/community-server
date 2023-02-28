@@ -3,8 +3,9 @@ const PostsRepository = require("../repositories/posts.repository");
 class PostsService {
   postsRepository = new PostsRepository();
 
-  createPost = async (title, content, image) => {
+  createPost = async (userId, title, content, image) => {
     const createPostData = await this.postsRepository.createPost(
+      userId,
       title,
       content,
       image
@@ -18,16 +19,18 @@ class PostsService {
 
   getAllPosts = async () => {
     const allPostsData = await this.postsRepository.getAllPosts();
-
-    if (allPostsData.length === 0) {
+    const findLikeCount = await this.postsRepository.findLikes();
+    if (!allPostsData) {
       throw new Error("게시글 조회에 실패하였습니다.");
     }
-
+    for (let i = 0; i < allPostsData.length; i++) {
+      allPostsData[i].likesCount = findLikeCount[i].likesCount;
+    }
     return allPostsData;
   };
 
-  findOnePost = async (postId) => {
-    const postData = await this.postsRepository.findOnePost(postId);
+  findOnePost = async (userId, postId) => {
+    const postData = await this.postsRepository.findOnePost(userId, postId);
 
     if (!postData.postId) {
       throw new Error("게시글 조회에 실패하였습니다.");
@@ -35,8 +38,9 @@ class PostsService {
     return postData;
   };
 
-  editPost = async (postId, title, content) => {
+  editPost = async (userId, postId, title, content) => {
     const postData = await this.postsRepository.editPost(
+      userId,
       postId,
       title,
       content
@@ -48,8 +52,8 @@ class PostsService {
     return postData;
   };
 
-  deletePost = async (postId) => {
-    const postData = await this.postsRepository.deletePost(postId);
+  deletePost = async (userId, postId) => {
+    const postData = await this.postsRepository.deletePost(userId, postId);
 
     if (!postData.postId) {
       throw new Error("댓글 삭제에 실패하였습니다.");
