@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const UsersRepository = require("../repositories/users.repository");
 
 class UsersService {
@@ -5,11 +6,11 @@ class UsersService {
 
   //회원가입 서비스
   createSignup = async ({ email, nickname, password }) => {
-    // 에러를 검사하는 모든 구문
+    const hashedPassword = await bcrypt.hash(password, 10);
     const signupData = await this.usersRepository.createSignup({
       email,
       nickname,
-      password,
+      password: hashedPassword,
     });
     if (!signupData) {
       throw new Error("회원가입을 실패하셨습니다.");
@@ -29,16 +30,20 @@ class UsersService {
 
   // 로그인 서비스
   createLogin = async ({ email, password }) => {
-    const loginData = await this.usersRepository.createLogin({
-      email,
-      password,
-    });
-
-    if (!loginData) {
-      throw new Error("로그인에 실패하였습니다.");
+    // 이메일 존재 여부 확인
+    const existUser = await this.usersRepository.getUserEmail({ email });
+    if (!existUser) {
+      throw new Error("존재하지 않는 회원입니다.");
     }
-
-    return loginData;
+    // 비밀번호 일치 여부 확인
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existUser.password
+    );
+    if (!isPasswordCorrect) {
+      throw new Error("비밀번호가 일치하지 않습니다.");
+    }
+    return isPasswordCorrect;
   };
 }
 
