@@ -1,6 +1,5 @@
 const UsersService = require("../services/users.service");
 const jwt = require("jsonwebtoken");
-const authMiddleware = require("../middlewares/auth.middleware.js");
 
 class UsersController {
   usersService = new UsersService();
@@ -30,8 +29,8 @@ class UsersController {
         password,
       });
       const token = jwt.sign(
-        { userId: loginData.userId },
-        process.env.JWT_KEY,
+        { userId: loginData.userId }, //
+        process.env.JWT_KEY, //
         {
           expiresIn: "5m",
         }
@@ -47,5 +46,6 @@ class UsersController {
     }
   };
 }
-
+//이메일, 닉네임 중복검사
+//로그아웃()
 module.exports = UsersController;
