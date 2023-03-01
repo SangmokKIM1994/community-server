@@ -2,6 +2,7 @@ const Joi = require("joi");
 const { BadRequestError } = require("../exceptions/customError");
 
 const JoiHelper = {
+  //User관련 Joi
   signUpCheck: async (req, res, next) => {
     const check = Joi.object().keys({
       email: Joi.string()
@@ -19,10 +20,8 @@ const JoiHelper = {
       nickname: Joi.string()
         .regex(/^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{1,10}$/)
         .error(
-          new BadRequestError(
-            "닉네임은 특수문자 제외 1~10자만 가능합니다."
-          )
-        ),     
+          new BadRequestError("닉네임은 특수문자 제외 1~10자만 가능합니다.")
+        ),
     });
     try {
       await check.validateAsync(req.body);
@@ -54,7 +53,7 @@ const JoiHelper = {
     }
     next();
   },
-
+  //Post관련 Joi
   postCheck: async (req, res, next) => {
     const check = Joi.object().keys({
       title: Joi.string()
@@ -72,6 +71,20 @@ const JoiHelper = {
     next();
   },
 
+  postId: async (req, res, next) => {
+    const check = Joi.object().keys({
+      postId: Joi.number()
+        .required()
+        .error(new BadRequestError("postId는 숫자입니다.")),
+    });
+    try {
+      await check.validateAsync(req.params);
+    } catch (error) {
+      next(error);
+    }
+    next();
+  },
+  //Comment관련 Joi
   commentCheck: async (req, res, next) => {
     const check = Joi.object().keys({
       comment: Joi.string()
@@ -80,6 +93,20 @@ const JoiHelper = {
     });
     try {
       await check.validateAsync(req.body);
+    } catch (error) {
+      next(error);
+    }
+    next();
+  },
+
+  commentId: async (req, res, next) => {
+    const check = Joi.object().keys({
+      commentId: Joi.number()
+        .required()
+        .error(new BadRequestError("commentId는 숫자입니다.")),
+    });
+    try {
+      await check.validateAsync(req.params);
     } catch (error) {
       next(error);
     }

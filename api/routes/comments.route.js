@@ -11,17 +11,23 @@ router.post(
   "/posts/:postId/comments",
   authMiddleware,
   JoiHelper.commentCheck,
+  JoiHelper.postId,
   commentsController.createComment
 );
 
 // 특정 게시물의 댓글 목록 조회
-router.get("/posts/:postId/comments", commentsController.getCommentsByPost);
+router.get(
+  "/posts/:postId/comments",
+  JoiHelper.postId,
+  commentsController.getCommentsByPost
+);
 
 // 특정 게시물의 댓글 수정
 router.put(
   "/comments/:commentId",
   authMiddleware,
   JoiHelper.commentCheck,
+  JoiHelper.commentId,
   commentsController.editComment
 );
 
@@ -29,6 +35,7 @@ router.put(
 router.delete(
   "/comments/:commentId",
   authMiddleware,
+  JoiHelper.commentId,
   commentsController.deleteComment
 );
 

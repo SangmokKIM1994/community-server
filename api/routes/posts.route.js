@@ -12,13 +12,25 @@ router.post(
   postsController.createPost
 );
 router.get("/", postsController.getAllPosts);
-router.get("/:postId", authMiddleware, postsController.findOnePost);
+router.get(
+  "/:postId",
+  authMiddleware,
+  JoiHelper.postId,
+  postsController.findOnePost
+);
 router.put(
   "/:postId",
   authMiddleware,
   JoiHelper.postCheck,
+  JoiHelper.postId,
+  // JoiHelper.userId,
   postsController.editPost
 );
-router.delete("/:postId", authMiddleware, postsController.deletePost);
+router.delete(
+  "/:postId",
+  authMiddleware,
+  JoiHelper.postId,
+  postsController.deletePost
+);
 
 module.exports = router;
