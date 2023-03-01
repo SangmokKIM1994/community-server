@@ -6,7 +6,7 @@ class UsersController {
 
   //회원가입
   createSignup = async (req, res, next) => {
-    const { email, nickname, password } = req.body;
+    const { password } = req.body;
 
     try {
       await this.usersService.createSignup({
@@ -29,8 +29,8 @@ class UsersController {
         password,
       });
       const token = jwt.sign(
-        { userId: loginData.userId }, //
-        process.env.JWT_KEY, //
+        { userId: loginData.userId },
+        process.env.JWT_KEY,
         {
           expiresIn: "5m",
         }

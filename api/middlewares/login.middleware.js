@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(401).json({
-      message: "비정상적인 접근입니다.",
+      message: "유효하지 않은 토큰입니다.",
     });
   }
 };
