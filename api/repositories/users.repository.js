@@ -12,6 +12,12 @@ class UsersRepository {
     const result = await Users.findOne({ where: { email, password } });
     return result;
   };
+
+  // 이메일로 회원 조회
+  getUserEmail = async ({ email }) => {
+    const result = await Users.findOne({ where: { email } });
+    return result;
+  };
 }
 
 module.exports = UsersRepository;
