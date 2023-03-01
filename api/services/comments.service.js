@@ -10,8 +10,6 @@ module.exports = class CommentsService {
   }
   // 댓글 작성
   createComment = async ({ userId, postId, comment }) => {
-    // postId를 검증하는 예외 처리 필요
-
     const result = await this.commentsRepository.createComment({
       userId,
       postId,
@@ -25,7 +23,6 @@ module.exports = class CommentsService {
 
   // 댓글 목록 조회
   getCommentsByPost = async ({ postId }) => {
-    // postId를 검증하는 예외 처리 필요
     const comments = await this.commentsRepository.getCommentsByPost({
       postId,
     });
