@@ -4,6 +4,6 @@ const authMiddleware = require("../middlewares/auth.middleware");
 const LikesController = require("../controllers/likes.controller.js");
 const likesRouter = new LikesController();
 
-router.put("/posts/:postId", authMiddleware, likesRouter.like);
+router.put("/posts/:postId", loginMiddleware, likesRouter.like);
 
 module.exports = router;

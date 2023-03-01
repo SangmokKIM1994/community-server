@@ -5,10 +5,10 @@ const loginMiddleware = require("../middlewares/login.middleware");
 const PostsController = require("../controllers/posts.controller");
 const postsController = new PostsController();
 
-router.post("/", authMiddleware, postsController.createPost);
+router.post("/", loginMiddleware, postsController.createPost);
 router.get("/", postsController.getAllPosts);
 router.get("/:postId", authMiddleware, postsController.findOnePost);
 router.put("/:postId", loginMiddleware, postsController.editPost);
-router.delete("/:postId", authMiddleware, postsController.deletePost);
+router.delete("/:postId", loginMiddleware, postsController.deletePost);
 
 module.exports = router;

@@ -3,13 +3,13 @@ const router = express.Router();
 
 const CommentsController = require("../controllers/comments.controller.js");
 const loginMiddleware = require("../middlewares/login.middleware");
-const authMiddleware = require("../middlewares/auth.middleware.js");
+const loginMiddleware = require("../middlewares/auth.middleware.js");
 const commentsController = new CommentsController();
 
 // 특정 게시물의 댓글 작성
 router.post(
   "/posts/:postId/comments",
-  authMiddleware,
+  loginMiddleware,
   commentsController.createComment
 );
 
@@ -26,7 +26,7 @@ router.put(
 // 특정 게시물의 댓글 삭제
 router.delete(
   "/comments/:commentId",
-  authMiddleware,
+  loginMiddleware,
   commentsController.deleteComment
 );
 
