@@ -5,11 +5,22 @@ class PostsController {
 
   createPost = async (req, res, next) => {
     const { userId } = res.locals.user;
-    const { title, content, image } = req.body;
+    const { title, content } = req.body;
 
     try {
-      await this.postsService.createPost(userId, title, content, image);
-
+      if (req.file) {
+        const filename = req.file.key;
+        const fileUrl = req.file.location;
+        await this.postsService.createPost(
+          userId,
+          title,
+          content,
+          filename,
+          fileUrl
+        );
+      } else {
+        await this.postsService.createPost(userId, title, content);
+      }
       res.status(201).json({ message: "게시글이 생성되었습니다." });
     } catch (err) {
       next(err);
@@ -26,11 +37,9 @@ class PostsController {
     }
   };
 
-
   findOnePost = async (req, res, next) => {
     const { userId } = res.locals.user;
     const { postId } = req.params;
-
 
     try {
       const postData = await this.postsService.findOnePost(userId, postId);
