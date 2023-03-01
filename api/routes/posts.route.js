@@ -8,7 +8,7 @@ const postsController = new PostsController();
 
 router.post(
   "/",
-  authMiddleware,
+  loginMiddleware,
   JoiHelper.postCheck,
   postsController.createPost
 );
@@ -21,7 +21,7 @@ router.get(
 );
 router.put(
   "/:postId",
-  authMiddleware,
+  loginMiddleware,
   JoiHelper.postCheck,
   JoiHelper.postId,
   // JoiHelper.userId,
@@ -29,10 +29,9 @@ router.put(
 );
 router.delete(
   "/:postId",
-  authMiddleware,
+  loginMiddleware,
   JoiHelper.postId,
   postsController.deletePost
 );
-
 
 module.exports = router;

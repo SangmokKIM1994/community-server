@@ -1,5 +1,4 @@
 const { Users } = require("../../db/models");
-const { Op } = require("sequelize");
 
 class UsersRepository {
   //회원가입 리포
