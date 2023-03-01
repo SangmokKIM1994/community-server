@@ -1,3 +1,4 @@
+const { BadRequestError } = require("../middlewares/customError.js");
 const CommentsService = require("../services/comments.service.js");
 
 module.exports = class CommentsController {
@@ -12,7 +13,7 @@ module.exports = class CommentsController {
 
     try {
       if (!(postId && comment)) {
-        throw new Error("댓글 작성에 실패하였습니다.");
+        throw new BadRequestError("적절하지 않은 파라미터 요청입니다.");
       }
       const result = await this.commentsService.createComment({
         userId,
@@ -31,7 +32,7 @@ module.exports = class CommentsController {
 
     try {
       if (!postId) {
-        throw new Error("댓글 목록 조회에 실패하였습니다.");
+        throw new BadRequestError("적절하지 않은 파라미터 요청입니다.");
       }
       const result = await this.commentsService.getCommentsByPost({
         postId,
@@ -50,7 +51,7 @@ module.exports = class CommentsController {
 
     try {
       if (!(commentId && comment)) {
-        throw new Error("댓글 수정에 실패하였습니다.");
+        throw new BadRequestError("적절하지 않은 파라미터 요청입니다.");
       }
       const result = await this.commentsService.editComment({
         userId,
@@ -70,7 +71,7 @@ module.exports = class CommentsController {
 
     try {
       if (!commentId) {
-        throw new Error("댓글 삭제에 실패하였습니다.");
+        throw new BadRequestError("적절하지 않은 파라미터 요청입니다.");
       }
       const result = await this.commentsService.deleteComment({
         userId,
