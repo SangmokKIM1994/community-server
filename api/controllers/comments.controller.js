@@ -1,4 +1,4 @@
-const { BadRequestError } = require("../middlewares/customError.js");
+const { BadRequestError } = require("../exceptions/customError.js");
 const CommentsService = require("../services/comments.service.js");
 
 module.exports = class CommentsController {
