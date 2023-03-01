@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const JoiHelper = require("../helpers/joi.helper");
 const CommentsController = require("../controllers/comments.controller.js");
 const authMiddleware = require("../middlewares/auth.middleware.js");
 const commentsController = new CommentsController();
@@ -9,6 +10,7 @@ const commentsController = new CommentsController();
 router.post(
   "/posts/:postId/comments",
   authMiddleware,
+  JoiHelper.commentCheck,
   commentsController.createComment
 );
 
@@ -19,6 +21,7 @@ router.get("/posts/:postId/comments", commentsController.getCommentsByPost);
 router.put(
   "/comments/:commentId",
   authMiddleware,
+  JoiHelper.commentCheck,
   commentsController.editComment
 );
 
