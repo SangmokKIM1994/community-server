@@ -1,13 +1,12 @@
 const UsersService = require("../services/users.service");
 const jwt = require("jsonwebtoken");
-const authMiddleware = require("../middlewares/auth.middleware.js");
 
 class UsersController {
   usersService = new UsersService();
 
   //회원가입
   createSignup = async (req, res, next) => {
-    const { email, nickname, password } = req.body;
+    const { password } = req.body;
 
     try {
       await this.usersService.createSignup({
@@ -47,5 +46,6 @@ class UsersController {
     }
   };
 }
-
+//이메일, 닉네임 중복검사
+//로그아웃()
 module.exports = UsersController;
