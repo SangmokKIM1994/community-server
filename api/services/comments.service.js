@@ -1,7 +1,7 @@
 const {
   NotFoundError,
   ForbiddenError,
-} = require("../middlewares/customError.js");
+} = require("../exceptions/customError.js");
 const CommentsRepository = require("../repositories/comments.repository.js");
 
 module.exports = class CommentsService {
