@@ -39,7 +39,7 @@ module.exports = class CommentsService {
     if (!existComment) {
       throw new Error("댓글 조회에 실패하였습니다.");
     }
-    if (!existComment.userId === userId) {
+    if (existComment.userId !== userId) {
       throw new Error("권한이 없습니다.");
     }
     const updated = await this.commentsRepository.editComment({
@@ -60,7 +60,7 @@ module.exports = class CommentsService {
     if (!existComment) {
       throw new Error("댓글 조회에 실패하였습니다.");
     }
-    if (!existComment.userId === userId) {
+    if (existComment.userId !== userId) {
       throw new Error("권한이 없습니다.");
     }
     const deleted = await this.commentsRepository.deleteComment({
