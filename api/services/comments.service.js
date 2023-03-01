@@ -6,8 +6,6 @@ module.exports = class CommentsService {
   }
   // 댓글 작성
   createComment = async ({ userId, postId, comment }) => {
-    // postId를 검증하는 예외 처리 필요
-
     const result = await this.commentsRepository.createComment({
       userId,
       postId,
@@ -21,7 +19,6 @@ module.exports = class CommentsService {
 
   // 댓글 목록 조회
   getCommentsByPost = async ({ postId }) => {
-    // postId를 검증하는 예외 처리 필요
     const comments = await this.commentsRepository.getCommentsByPost({
       postId,
     });
@@ -39,7 +36,7 @@ module.exports = class CommentsService {
     if (!existComment) {
       throw new Error("댓글 조회에 실패하였습니다.");
     }
-    if (!existComment.userId === userId) {
+    if (existComment.userId !== userId) {
       throw new Error("권한이 없습니다.");
     }
     const updated = await this.commentsRepository.editComment({
@@ -60,7 +57,7 @@ module.exports = class CommentsService {
     if (!existComment) {
       throw new Error("댓글 조회에 실패하였습니다.");
     }
-    if (!existComment.userId === userId) {
+    if (existComment.userId !== userId) {
       throw new Error("권한이 없습니다.");
     }
     const deleted = await this.commentsRepository.deleteComment({
