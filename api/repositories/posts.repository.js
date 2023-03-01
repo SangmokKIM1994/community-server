@@ -28,7 +28,6 @@ class PostsRepository {
   };
 
   findOnePost = async (postId) => {
-    
     const postData = await Posts.findOne({
       where: { postId },
       attributes: [
@@ -55,7 +54,7 @@ class PostsRepository {
   findOneLikeCount = async (postId) => {
     const findLikeAll = await Likes.count({ where: { postId } });
 
-    return findLikeAll
+    return findLikeAll;
   };
 
   findLikeState = async (userId, postId) => {

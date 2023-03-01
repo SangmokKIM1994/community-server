@@ -24,7 +24,9 @@ class PostsService {
       throw new Error("게시글 조회에 실패하였습니다.");
     }
     for (let i = 0; i < allPostsData.length; i++) {
-      allPostsData[i].likesCount = await this.postsRepository.findOneLikeCount(allPostsData[i].postId);
+      allPostsData[i].likesCount = await this.postsRepository.findOneLikeCount(
+        allPostsData[i].postId
+      );
     }
     return allPostsData;
   };
@@ -60,14 +62,13 @@ class PostsService {
 
   deletePost = async (userId, postId) => {
     const findPost = await this.postsRepository.findHavePost(userId, postId);
-    
+
     if (!findPost) {
       throw new Error("게시글 삭제에 실패하였습니다.");
     }
     const postData = await this.postsRepository.deletePost(userId, postId);
     return postData;
   };
-  
 }
 
 module.exports = PostsService;
