@@ -20,6 +20,23 @@ class UsersController {
     }
   };
 
+  //이메일 중복검사
+  duplicateCheck = async (req, res, next) => {
+    const email = req.query.email;
+    const nickname = req.query.nickname;
+    try {
+      if (!email) {
+        await this.usersService.nicknameCheck({ nickname });
+        res.status(200).json({ message: "사용가능한 닉네임 입니다." });
+      } else {
+        await this.usersService.emailCheck({ email });
+        res.status(200).json({ message: "사용가능한 이메일 입니다." });
+      }
+    } catch (err) {
+      next(err);
+    }
+  };
+
   //로그인
   createLogin = async (req, res, next) => {
     const { email, password } = req.body;
