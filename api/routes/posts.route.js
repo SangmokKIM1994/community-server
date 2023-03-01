@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middlewares/auth.middleware");
 const JoiHelper = require("../helpers/joi.helper");
+const loginMiddleware = require("../middlewares/login.middleware");
 const PostsController = require("../controllers/posts.controller");
 const postsController = new PostsController();
 
@@ -32,5 +33,6 @@ router.delete(
   JoiHelper.postId,
   postsController.deletePost
 );
+
 
 module.exports = router;

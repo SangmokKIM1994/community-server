@@ -3,6 +3,7 @@ const router = express.Router();
 
 const JoiHelper = require("../helpers/joi.helper");
 const CommentsController = require("../controllers/comments.controller.js");
+const loginMiddleware = require("../middlewares/login.middleware");
 const authMiddleware = require("../middlewares/auth.middleware.js");
 const commentsController = new CommentsController();
 
@@ -25,9 +26,9 @@ router.get(
 // 특정 게시물의 댓글 수정
 router.put(
   "/comments/:commentId",
-  authMiddleware,
   JoiHelper.commentCheck,
   JoiHelper.commentId,
+  loginMiddleware,
   commentsController.editComment
 );
 
