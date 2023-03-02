@@ -40,6 +40,7 @@ class PostsRepository {
         "postId",
         "title",
         "content",
+        "fileUrl",
         [
           sequelize.fn("COUNT", sequelize.col("Comments.postId")),
           "commentsCount",

@@ -3,6 +3,7 @@ const router = express.Router();
 const authMiddleware = require("../middlewares/auth.middleware");
 const JoiHelper = require("../helpers/joi.helper");
 const loginMiddleware = require("../middlewares/login.middleware");
+const uploadMiddleware = require("../middlewares/upload.middleware");
 const PostsController = require("../controllers/posts.controller");
 const postsController = new PostsController();
 
@@ -10,6 +11,7 @@ router.post(
   "/",
   loginMiddleware,
   JoiHelper.postCheck,
+  uploadMiddleware,
   postsController.createPost
 );
 router.get("/", postsController.getAllPosts);
