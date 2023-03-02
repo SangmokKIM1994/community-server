@@ -59,9 +59,31 @@ class PostsController {
     const { title, content } = req.body;
 
     try {
-      await this.postsService.editPost(userId, postId, title, content);
-
-      res.status(200).json({ massege: "게시글이 수정되었습니다." });
+      if (req.file) {
+        const filename = req.file.key;
+        const fileUrl = req.file.location;
+        console.log(
+          "Controller.edit : ",
+          userId,
+          postId,
+          title,
+          content,
+          filename,
+          fileUrl
+        );
+        await this.postsService.editPost(
+          userId,
+          postId,
+          title,
+          content,
+          filename,
+          fileUrl
+        );
+        res.status(200).json({ massege: "게시글이 수정되었습니다." });
+      } else {
+        console.log("Controller.edit : ", userId, postId, title, content);
+        await this.postsService.editPost(userId, postId, title, content);
+      }
     } catch (err) {
       next(err);
     }
