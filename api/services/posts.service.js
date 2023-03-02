@@ -3,12 +3,12 @@ const PostsRepository = require("../repositories/posts.repository");
 class PostsService {
   postsRepository = new PostsRepository();
 
-  createPost = async (userId, title, content, image) => {
+  createPost = async (userId, title, content, ...file) => {
     const createPostData = await this.postsRepository.createPost(
       userId,
       title,
       content,
-      image
+      ...file
     );
 
     if (!createPostData) {

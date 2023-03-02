@@ -2,8 +2,14 @@ const { Comments, Users, Posts, Likes, sequelize } = require("../../db/models");
 const parseModelToFaltObjet = require("../helpers/parse.sequelize.helper.js");
 
 class PostsRepository {
-  createPost = async (userId, title, content) => {
-    const createPostData = await Posts.create({ userId, title, content });
+  createPost = async (userId, title, content, filename, fileUrl) => {
+    const createPostData = await Posts.create({
+      userId,
+      title,
+      content,
+      filename,
+      fileUrl,
+    });
 
     return createPostData;
   };
