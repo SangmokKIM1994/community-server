@@ -38,6 +38,7 @@ class PostsRepository {
       where: { postId },
       attributes: [
         "postId",
+        "userId",
         "title",
         "content",
         "fileUrl",
@@ -73,8 +74,8 @@ class PostsRepository {
     }
   };
 
-  findHavePost = async (userId, postId) => {
-    const findPost = await Posts.findOne({ where: { userId, postId } });
+  findHavePost = async (postId) => {
+    const findPost = await Posts.findOne({ where: {postId } });
 
     return findPost;
   };

@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 const { Users } = require("../../db/models");
 
 module.exports = async (req, res, next) => {
-  const { authorization } = req.cookies;
-  const [tokenType, token] = authorization.split(" ");
+  const { authorization } = req.headers;
+  const [tokenType, token] = (authorization ?? "").split(" ");
   if (tokenType !== "Bearer" || !token) {
     return res.status(401).json({
       message: "토큰 타입이 일치하지 않거나, 토큰이 존재하지 않습니다.",
