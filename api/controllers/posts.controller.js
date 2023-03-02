@@ -38,6 +38,9 @@ class PostsController {
   };
 
   findOnePost = async (req, res, next) => {
+    if (!res.locals.user) {
+      res.locals.user = { userId: 0 };
+    }
     const { userId } = res.locals.user;
     const { postId } = req.params;
 
