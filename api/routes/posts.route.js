@@ -21,9 +21,13 @@ router.get(
   JoiHelper.postId,
   postsController.findOnePost
 );
-router.put(
+router.patch(
   "/:postId",
   loginMiddleware,
+  uploadMiddleware,
+  async (req, res, next) => {
+    next();
+  },
   JoiHelper.postCheck,
   JoiHelper.postId,
   // JoiHelper.userId,

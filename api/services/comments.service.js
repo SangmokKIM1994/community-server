@@ -3,13 +3,19 @@ const {
   ForbiddenError,
 } = require("../exceptions/customError.js");
 const CommentsRepository = require("../repositories/comments.repository.js");
+const PostsRepository = require("../repositories/posts.repository.js");
 
 module.exports = class CommentsService {
   constructor() {
     this.commentsRepository = new CommentsRepository();
+    this.postsRepository = new PostsRepository();
   }
   // 댓글 작성
   createComment = async ({ userId, postId, comment }) => {
+    const existPost = await this.postsRepository.findHavePost({ postId });
+    if (!existPost) {
+      throw new NotFoundError("게시글 조회에 실패하였습니다.");
+    }
     const result = await this.commentsRepository.createComment({
       userId,
       postId,
