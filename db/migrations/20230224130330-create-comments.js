@@ -16,6 +16,7 @@ module.exports = {
           model: "Posts",
           key: "postId",
         },
+        onDelete: "CASCADE",
       },
       userId: {
         allowNull: false,
@@ -24,6 +25,7 @@ module.exports = {
           model: "Users",
           key: "userId",
         },
+        onDelete: "CASCADE",
       },
       comment: {
         type: Sequelize.STRING,

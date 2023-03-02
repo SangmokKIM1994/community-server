@@ -80,9 +80,10 @@ class PostsRepository {
     return findPost;
   };
 
-  editPost = async (userId, postId, title, content) => {
+  editPost = async (userId, postId, title, content, ...file) => {
+    console.log("Repo.edit : ", userId, postId, title, content, ...file);
     const update = await Posts.update(
-      { title, content },
+      { title, content, ...file },
       { where: { userId, postId } }
     );
 
