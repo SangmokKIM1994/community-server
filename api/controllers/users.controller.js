@@ -23,7 +23,7 @@ class UsersController {
   //이메일과 닉네임 중복검사
   duplicateCheck = async (req, res, next) => {
     const email = req.query.email;
-    const nickname = req.quert.nickname;
+    const nickname = req.query.nickname;
     try {
       if (!nickname) {
         await this.usersService.emailCheck({ email });
