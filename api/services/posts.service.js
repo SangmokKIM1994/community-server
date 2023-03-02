@@ -1,4 +1,5 @@
 const PostsRepository = require("../repositories/posts.repository");
+const {ForbiddenError,NotFoundError} = require("../exceptions/customError")
 
 class PostsService {
   postsRepository = new PostsRepository();
@@ -46,7 +47,13 @@ class PostsService {
   };
 
   editPost = async (userId, postId, title, content) => {
-    const findPost = await this.postsRepository.findHavePost(userId, postId);
+    const findPost = await this.postsRepository.findHavePost(postId);
+    if (!findPost){
+      throw new NotFoundError("수정할 게시물을 찾을수 없습니다.")
+    }
+    if (userId !== findPost.userId){
+      throw new ForbiddenError("수정 권한이 없습니다.")
+    }
     const postData = await this.postsRepository.editPost(
       userId,
       postId,
@@ -54,17 +61,19 @@ class PostsService {
       content
     );
 
-    if (!findPost || !postData) {
+    if (!postData) {
       throw new Error("게시글 수정에 실패하였습니다.");
     }
     return postData;
   };
 
   deletePost = async (userId, postId) => {
-    const findPost = await this.postsRepository.findHavePost(userId, postId);
-
-    if (!findPost) {
-      throw new Error("게시글 삭제에 실패하였습니다.");
+    const findPost = await this.postsRepository.findHavePost(postId);
+    if (!findPost){
+      throw new NotFoundError("삭제할 게시물을 찾을수 없습니다.")
+    }
+    if (userId !== findPost.userId){
+      throw new ForbiddenError("삭제 권한이 없습니다.")
     }
     const postData = await this.postsRepository.deletePost(userId, postId);
     return postData;
