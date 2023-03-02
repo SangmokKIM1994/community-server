@@ -6,9 +6,7 @@ const JoiHelper = {
   signUpCheck: async (req, res, next) => {
     const check = Joi.object().keys({
       email: Joi.string()
-        .regex(
-          /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
-        )
+        .email()
         .required()
         .error(new BadRequestError("email형식에 맞춰서 입력바랍니다.")),
       password: Joi.string()
