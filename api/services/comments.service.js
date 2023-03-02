@@ -12,7 +12,7 @@ module.exports = class CommentsService {
   }
   // 댓글 작성
   createComment = async ({ userId, postId, comment }) => {
-    const existPost = await this.postsRepository.findHavePost({ postId });
+    const existPost = await this.postsRepository.findHavePost(postId);
     if (!existPost) {
       throw new NotFoundError("게시글 조회에 실패하였습니다.");
     }
