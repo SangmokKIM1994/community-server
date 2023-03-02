@@ -1,13 +1,12 @@
 const UsersService = require("../services/users.service");
 const jwt = require("jsonwebtoken");
-const authMiddleware = require("../middlewares/auth.middleware.js");
 
 class UsersController {
   usersService = new UsersService();
 
   //회원가입
   createSignup = async (req, res, next) => {
-    const { email, nickname, password } = req.body;
+    const { password } = req.body;
 
     try {
       await this.usersService.createSignup({
@@ -16,6 +15,23 @@ class UsersController {
         password,
       });
       return res.status(201).json({ message: "회원가입을 성공하셨습니다." });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  //이메일 중복검사
+  duplicateCheck = async (req, res, next) => {
+    const email = req.query.email;
+    const nickname = req.query.nickname;
+    try {
+      if (!email) {
+        await this.usersService.nicknameCheck({ nickname });
+        res.status(200).json({ message: "사용가능한 닉네임 입니다." });
+      } else {
+        await this.usersService.emailCheck({ email });
+        res.status(200).json({ message: "사용가능한 이메일 입니다." });
+      }
     } catch (err) {
       next(err);
     }
@@ -47,5 +63,6 @@ class UsersController {
     }
   };
 }
-
+//이메일, 닉네임 중복검사
+//로그아웃()
 module.exports = UsersController;

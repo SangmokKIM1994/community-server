@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const { Users } = require("../../db/models");
-const PostsController = require("../controllers/posts.controller");
 
 module.exports = async (req, res, next) => {
   const { authorization } = req.headers;
