@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
           model: "users",
           key: "userId",
         },
-        onDelete: 'CASCADE',
+        onDelete: "CASCADE",
       },
       postId: {
         allowNull: false,
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
           model: "posts",
           key: "postId",
         },
-        onDelete: 'CASCADE',
+        onDelete: "CASCADE",
       },
     },
     {
