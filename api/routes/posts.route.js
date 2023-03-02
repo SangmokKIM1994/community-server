@@ -10,8 +10,8 @@ const postsController = new PostsController();
 router.post(
   "/",
   loginMiddleware,
-  JoiHelper.postCheck,
   uploadMiddleware,
+  JoiHelper.postCheck,
   postsController.createPost
 );
 router.get("/", postsController.getAllPosts);
