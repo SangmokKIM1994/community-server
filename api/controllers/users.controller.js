@@ -50,7 +50,7 @@ class UsersController {
         { userId: loginData.userId },
         process.env.JWT_KEY,
         {
-          expiresIn: "5m",
+          expiresIn: process.env.JWT_EXPIRESIN,
         }
       );
 
