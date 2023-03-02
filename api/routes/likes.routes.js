@@ -7,7 +7,7 @@ const likesRouter = new LikesController();
 
 router.put(
   "/posts/:postId",
-  JoiHelper.commentId,
+  JoiHelper.postId,
   loginMiddleware,
   likesRouter.like
 );
