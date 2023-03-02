@@ -38,6 +38,7 @@ class PostsRepository {
       where: { postId },
       attributes: [
         "postId",
+        "userId",
         "title",
         "content",
         "fileUrl",
