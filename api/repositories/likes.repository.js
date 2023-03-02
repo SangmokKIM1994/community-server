@@ -5,18 +5,18 @@ class LikesRepository {
     return await Posts.findOne({ where: { postId } });
   };
 
-  like = async (userId, postId) => {
-    const findLike = await Likes.findOne({ where: { userId, postId } });
+  findLike = async (userId, postId) => {
+    return await Likes.findOne({ where: { userId, postId } });
+  };
 
-    if (findLike) {
-      Likes.destroy({
-        where: { userId: findLike.userId, postId: findLike.postId },
-      });
-      return "좋아요가 해제되었습니다";
-    } else {
-      Likes.create({ userId, postId });
-      return "좋아요가 등록되었습니다.";
-    }
+  deleteLike = async (userId, postId) => {
+    Likes.destroy({ where: { userId, postId } });
+    return;
+  };
+
+  createLike = async (userId, postId) => {
+    Likes.create({ userId, postId });
+    return;
   };
 }
 

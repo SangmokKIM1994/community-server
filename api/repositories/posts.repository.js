@@ -2,23 +2,16 @@ const { Comments, Users, Posts, Likes, sequelize } = require("../../db/models");
 const parseModelToFaltObjet = require("../helpers/parse.sequelize.helper.js");
 
 class PostsRepository {
-  createPost = async (userId, title, content) => {
-    const createPostData = await Posts.create({ userId, title, content });
+  createPost = async (userId, title, content, filename, fileUrl) => {
+    const createPostData = await Posts.create({
+      userId,
+      title,
+      content,
+      filename,
+      fileUrl,
+    });
 
     return createPostData;
-  };
-
-  findLikesCount = async () => {
-    const findLike = await Posts.findAll({
-      attributes: [
-        [sequelize.fn("COUNT", sequelize.col("Likes.postId")), "likesCount"],
-      ],
-      include: [{ model: Likes, attributes: [] }],
-      group: ["Posts.postId"],
-      order: [["createdAt", "DESC"]],
-      raw: true,
-    }).then((model) => model.map(parseModelToFaltObjet));
-    return findLike;
   };
 
   getAllPosts = async () => {
@@ -26,7 +19,6 @@ class PostsRepository {
       attributes: [
         "postId",
         "title",
-        "likesCount",
         [
           sequelize.fn("COUNT", sequelize.col("Comments.postId")),
           "commentsCount",
@@ -41,15 +33,14 @@ class PostsRepository {
     return allPostsData;
   };
 
-  findOnePost = async (postId, userId) => {
-    
+  findOnePost = async (postId) => {
     const postData = await Posts.findOne({
       where: { postId },
       attributes: [
         "postId",
         "title",
         "content",
-        "likesCount",
+        "fileUrl",
         [
           sequelize.fn("COUNT", sequelize.col("Comments.postId")),
           "commentsCount",
@@ -68,9 +59,9 @@ class PostsRepository {
   };
 
   findOneLikeCount = async (postId) => {
-    const findLikeAll = await Likes.findAll({ where: { postId } });
+    const findLikeAll = await Likes.count({ where: { postId } });
 
-    return findLikeAll.length;
+    return findLikeAll;
   };
 
   findLikeState = async (userId, postId) => {

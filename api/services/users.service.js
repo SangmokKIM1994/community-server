@@ -19,14 +19,28 @@ class UsersService {
   };
 
   //이메일 중복검사
+  emailCheck = async ({ email }) => {
+    const existEmail = await this.usersRepository.emailCheck({
+      email,
+    });
+
+    if (existEmail) {
+      throw new Error("중복된 이메일입니다.");
+    }
+    return;
+  };
 
   //닉네임 중복검사
-  //const query = {_id : userId};
-  //const result = await coll.countDocuments(qeury)
-  //파라미터 유효성, 중복 검사
+  nicknameCheck = async ({ nickname }) => {
+    const existNickname = await this.usersRepository.nicknameCheck({
+      nickname,
+    });
 
-  // const emailType = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z\-]+/;
-  // const passwordType = /^[a-zA-Z0-9](6,10)&/;
+    if (existNickname) {
+      throw new Error("중복된 닉네임입니다.");
+    }
+    return;
+  };
 
   // 로그인 서비스
   createLogin = async ({ email, password }) => {
