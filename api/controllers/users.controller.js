@@ -14,6 +14,7 @@ class UsersController {
         nickname,
         password,
       });
+
       return res.status(201).json({ message: "회원가입을 성공하셨습니다." });
     } catch (err) {
       next(err);
